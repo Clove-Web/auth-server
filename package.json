@@ -1,0 +1,26 @@
+{
+  "name": "auth-server",
+  "version": "0.1.0",
+  "description": "Doughmination single sign-on: an OpenID Connect provider with passkeys, passwords and TOTP, running on Cloudflare Workers + D1.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply auth-server --local",
+    "db:migrate:remote": "wrangler d1 migrations apply auth-server --remote",
+    "cf-typegen": "wrangler types --env-interface Env",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@simplewebauthn/server": "^14.0.2",
+    "hono": "^4.13.8",
+    "jose": "^6.2.12",
+    "uqr": "^0.1.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260916.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.132.0"
+  }
+}

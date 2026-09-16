@@ -1,0 +1,15 @@
+# Copy to .dev.vars for `wrangler dev`. In production set these with
+# `wrangler secret put <NAME>` instead.
+
+# Local issuer. Passkeys are bound to this origin's hostname.
+ISSUER=http://localhost:8787
+
+# Encrypts signing keys and TOTP secrets at rest in D1. Changing it makes every
+# stored signing key and TOTP secret unreadable.
+# Generate with: openssl rand -base64 32
+KEY_ENCRYPTION_KEY=
+
+# Required to create the first admin at /setup. /setup closes for good once any
+# user exists, so this can be deleted afterwards.
+# Generate with: openssl rand -hex 24
+SETUP_TOKEN=

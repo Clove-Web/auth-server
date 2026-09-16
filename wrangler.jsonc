@@ -1,0 +1,44 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "auth-server",
+	"main": "src/main.ts",
+	"compatibility_date": "2026-09-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"observability": {
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		}
+	},
+	// Stylesheet + browser script. Served straight from the edge; public/_headers
+	// gives them the same hardening headers the worker adds to its own responses.
+	"assets": {
+		"directory": "./public"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "auth-server",
+			"database_id": "ce757d6d-ac0f-406a-baca-006163b31566",
+			"migrations_dir": "migrations"
+		}
+	],
+	// Hourly sweep of expired sessions, codes, tokens and challenges.
+	"triggers": {
+		"crons": [
+			"17 * * * *"
+		]
+	},
+	// "routes": [{ "pattern": "auth.doughmination.gay", "custom_domain": true }],
+	"vars": {
+		// Public origin of this server. It is the OIDC issuer and the passkey
+		// relying party, so it must never change once passkeys are registered.
+		"ISSUER": "https://auth.doughmination.gay",
+		"SITE_NAME": "Doughmination SSO"
+	}
+	// Secrets (wrangler secret put <NAME>):
+	//   KEY_ENCRYPTION_KEY  encrypts signing keys + TOTP secrets at rest
+	//   SETUP_TOKEN         unlocks /setup while there are no users yet
+}
