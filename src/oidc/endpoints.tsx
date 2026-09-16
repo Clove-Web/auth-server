@@ -359,13 +359,18 @@ oidc.post("/token", async (c) => {
     if (!row || row.client_id !== client.id || row.revoked_at || row.expires_at <= now()) return invalid();
 
     // Rotation: each refresh token works once. Seeing one again means it was
-    // copied, so the whole family is shut down.
+    // copied, so the whole family is shut down — unless it's within a short
+    // grace period of its first use. Apps running on many instances (Workers,
+    // eventually-consistent storage) can legitimately race two refreshes with
+    // the same token; each racer gets its own valid successor.
     const claimed = await c.env.DB.prepare(
       "UPDATE refresh_tokens SET used_at = ? WHERE token_hash = ? AND used_at IS NULL",
     )
       .bind(now(), hash)
       .run();
-    if (claimed.meta.changes !== 1) {
+    // If our read saw it unused but the claim lost, another request used it just now.
+    const usedAt = row.used_at ?? now();
+    if (claimed.meta.changes !== 1 && now() - usedAt > TTL.refreshReuseGrace) {
       await c.env.DB.prepare("UPDATE refresh_tokens SET revoked_at = ? WHERE family_id = ? AND revoked_at IS NULL")
         .bind(now(), row.family_id)
         .run();

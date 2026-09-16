@@ -53,6 +53,8 @@ export const TTL = {
   accessToken: 60 * 60,
   idToken: 60 * 60,
   refreshToken: 60 * 60 * 24 * 30,
+  /** A used refresh token is honoured again for this long (racing app instances). */
+  refreshReuseGrace: 60,
   /** Changing sign-in methods or using /admin needs a sign-in this recent. */
   recentAuth: 60 * 30,
   /** Retired signing keys stay in the JWKS this long so issued tokens verify. */
