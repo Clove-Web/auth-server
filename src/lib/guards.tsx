@@ -8,8 +8,8 @@ import { createMiddleware } from "hono/factory";
 import { TTL, issuerOrigin, now, type AppContext, type AppEnv } from "../env";
 import { timingSafeEqualStr } from "./crypto";
 import { form, safeReturn } from "./http";
+import { ArrowLeft } from "pixelarticons/react";
 import { render } from "../views/layout";
-import { Icon } from "../views/ui";
 
 function wantsJson(c: AppContext): boolean {
   return (c.req.header("content-type") ?? "").includes("application/json");
@@ -55,7 +55,7 @@ export const requireAdmin = createMiddleware<AppEnv>(async (c, next) => {
         <p class="muted">Your account isn't in the admin group for this server.</p>
         <p>
           <a class="btn primary" href="/account">
-            <Icon name="arrow-left" />
+            <ArrowLeft class="icon" aria-hidden="true" />
             Back to your account
           </a>
         </p>

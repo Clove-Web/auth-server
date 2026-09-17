@@ -2,6 +2,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "auth-server",
 	"main": "src/main.ts",
+	"tsconfig": "tsconfig.build.json",
 	"compatibility_date": "2026-09-01",
 	"compatibility_flags": [
 		"nodejs_compat"
@@ -16,6 +17,12 @@
 	// gives them the same hardening headers the worker adds to its own responses.
 	"assets": {
 		"directory": "./public"
+	},
+	// pixelarticons/react components call React's createElement; this repo
+	// renders with hono/jsx instead, which ships a React-API-compatible
+	// createElement, so the icons work without pulling in real React.
+	"alias": {
+		"react": "hono/jsx"
 	},
 	"d1_databases": [
 		{

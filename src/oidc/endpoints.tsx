@@ -6,6 +6,7 @@
 
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { Logout } from "pixelarticons/react";
 import { TTL, issuer, now, type AppContext, type AppEnv } from "../env";
 import { audit } from "../lib/audit";
 import { b64url, randomToken, sha256, sha256Hex, timingSafeEqualStr } from "../lib/crypto";
@@ -15,7 +16,7 @@ import { publicJwks } from "../data/keys";
 import { endSession } from "../data/sessions";
 import { getUser, groupsFor } from "../data/users";
 import { render } from "../views/layout";
-import { Csrf, Icon } from "../views/ui";
+import { Csrf } from "../views/ui";
 import {
   SUPPORTED_CLAIMS,
   SUPPORTED_SCOPES,
@@ -507,7 +508,7 @@ async function endSessionRequest(c: AppContext) {
           <input type="hidden" name="post_logout_redirect_uri" value={params.post_logout_redirect_uri ?? ""} />
           <input type="hidden" name="state" value={params.state ?? ""} />
           <button type="submit" class="primary wide">
-            <Icon name="logout" />
+            <Logout class="icon" aria-hidden="true" />
             Sign out
           </button>
         </form>

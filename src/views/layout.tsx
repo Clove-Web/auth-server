@@ -6,8 +6,8 @@
 
 import type { Child } from "hono/jsx";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
+import { Logout, Shield, User } from "pixelarticons/react";
 import { siteName, type AppContext } from "../env";
-import { Icon } from "./ui";
 
 interface PageOptions {
   title: string;
@@ -43,19 +43,19 @@ export async function render(c: AppContext, opts: PageOptions, body: Child): Pro
           {user && (
             <nav>
               <a class="btn small" href="/account">
-                <Icon name="user" />
+                <User class="icon" aria-hidden="true" />
                 Account
               </a>
               {user.isAdmin && (
                 <a class="btn small" href="/admin">
-                  <Icon name="shield" />
+                  <Shield class="icon" aria-hidden="true" />
                   Admin
                 </a>
               )}
               <form method="post" action="/logout" class="inline">
                 <input type="hidden" name="_csrf" value={session?.csrf ?? ""} />
                 <button type="submit" class="small">
-                  <Icon name="logout" />
+                  <Logout class="icon" aria-hidden="true" />
                   Sign out
                 </button>
               </form>

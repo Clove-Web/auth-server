@@ -5,6 +5,7 @@
  */
 
 import { Hono } from "hono";
+import { Key, Save, Shield } from "pixelarticons/react";
 import { renderSVG } from "uqr";
 import type { RegistrationResponseJSON } from "@simplewebauthn/server";
 import { TTL, now, siteName, type AppContext, type AppEnv } from "../env";
@@ -35,7 +36,7 @@ import {
   type UserRow,
 } from "../data/users";
 import { render } from "../views/layout";
-import { Csrf, ErrorNote, Field, Flash, Icon, Section, date, describeAgent, relative } from "../views/ui";
+import { Csrf, ErrorNote, Field, Flash, Section, date, describeAgent, relative } from "../views/ui";
 
 export const account = new Hono<AppEnv>();
 
@@ -99,7 +100,10 @@ async function accountPage(c: AppContext, opts: { error?: string; status?: 400 }
           />
           <Field label="Picture URL" name="picture" type="url" value={user.picture} maxlength={2048} placeholder="https://…" />
           <div>
-            <button type="submit">Save profile</button>
+            <button type="submit">
+              <Save class="icon" aria-hidden="true" />
+              Save profile
+            </button>
           </div>
         </form>
       </Section>
@@ -137,7 +141,7 @@ async function accountPage(c: AppContext, opts: { error?: string; status?: 400 }
         <form id="passkey-add" class="inline-edit">
           <input type="text" name="name" placeholder="Name, e.g. Phone" maxlength={60} aria-label="New passkey name" />
           <button type="submit" class="primary">
-            <Icon name="key" />
+            <Key class="icon" aria-hidden="true" />
             Add a passkey
           </button>
         </form>
@@ -372,7 +376,7 @@ async function totpSetupPage(c: AppContext, error?: string) {
         <Csrf token={c.get("session")!.csrf} />
         <Field label="Code" name="code" required inputmode="numeric" autocomplete="one-time-code" maxlength={7} autofocus />
         <button type="submit" class="primary wide">
-          <Icon name="shield" />
+          <Shield class="icon" aria-hidden="true" />
           Turn on
         </button>
       </form>

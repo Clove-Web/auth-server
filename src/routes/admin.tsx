@@ -6,6 +6,7 @@
 
 import { Hono } from "hono";
 import type { Child } from "hono/jsx";
+import { AppWindows, Link, Save, UserPlus, Users } from "pixelarticons/react";
 import { ADMIN_GROUP, issuer, type AppContext, type AppEnv } from "../env";
 import { audit, recentAudit } from "../lib/audit";
 import { form, formAll, lines } from "../lib/http";
@@ -51,7 +52,7 @@ import {
   setUserGroups,
 } from "../data/users";
 import { render } from "../views/layout";
-import { Csrf, ErrorNote, Field, Flash, Icon, Section, date, relative } from "../views/ui";
+import { Csrf, ErrorNote, Field, Flash, Section, date, relative } from "../views/ui";
 
 export const admin = new Hono<AppEnv>();
 
@@ -195,7 +196,7 @@ async function usersPage(c: AppContext, error?: string, values: Record<string, s
           </details>
           <div>
             <button type="submit" class="primary">
-              <Icon name="user-plus" />
+              <UserPlus class="icon" aria-hidden="true" />
               Create user
             </button>
           </div>
@@ -292,7 +293,10 @@ async function userPage(
             </label>
           </div>
           <div>
-            <button type="submit">Save profile</button>
+            <button type="submit">
+              <Save class="icon" aria-hidden="true" />
+              Save profile
+            </button>
           </div>
         </form>
       </Section>
@@ -302,7 +306,10 @@ async function userPage(
           <Csrf token={token} />
           <GroupChecks groups={allGroups} selected={groups} />
           <div>
-            <button type="submit">Save groups</button>
+            <button type="submit">
+              <Save class="icon" aria-hidden="true" />
+              Save groups
+            </button>
           </div>
         </form>
       </Section>
@@ -327,7 +334,7 @@ async function userPage(
             </select>
           </label>
           <button type="submit" class="primary">
-            <Icon name="link" />
+            <Link class="icon" aria-hidden="true" />
             {openLink ? "Replace link" : "Create link"}
           </button>
         </form>
@@ -540,7 +547,10 @@ async function groupsPage(c: AppContext, error?: string) {
                 <form method="post" action={`/admin/groups/${encodeURIComponent(g.name)}`} class="inline-edit">
                   <Csrf token={token} />
                   <input type="text" name="description" value={g.description} maxlength={200} placeholder="Description" aria-label={`Description of ${g.name}`} />
-                  <button type="submit" class="small">Save</button>
+                  <button type="submit" class="small">
+                    <Save class="icon" aria-hidden="true" />
+                    Save
+                  </button>
                 </form>
               </div>
               {g.name !== ADMIN_GROUP && (
@@ -562,7 +572,7 @@ async function groupsPage(c: AppContext, error?: string) {
           </div>
           <div>
             <button type="submit" class="primary">
-              <Icon name="users" />
+              <Users class="icon" aria-hidden="true" />
               Create group
             </button>
           </div>
@@ -734,7 +744,7 @@ async function clientsPage(c: AppContext, error?: string, raw: Record<string, st
           </details>
           <div>
             <button type="submit" class="primary">
-              <Icon name="app-windows" />
+              <AppWindows class="icon" aria-hidden="true" />
               Create application
             </button>
           </div>
@@ -827,7 +837,10 @@ async function clientPage(c: AppContext, id: string, opts: { error?: string; sec
             allowed={client.allowedGroups}
           />
           <div>
-            <button type="submit">Save</button>
+            <button type="submit">
+              <Save class="icon" aria-hidden="true" />
+              Save
+            </button>
           </div>
         </form>
       </Section>

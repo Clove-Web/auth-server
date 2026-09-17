@@ -5,6 +5,7 @@
  */
 
 import { Hono } from "hono";
+import { Key, Login } from "pixelarticons/react";
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import type { AppContext, AppEnv } from "../env";
 import { audit } from "../lib/audit";
@@ -26,7 +27,7 @@ import {
 } from "../data/sessions";
 import { claimTotpStep, countUsers, getUser, getUserByUsername, setPasswordHash } from "../data/users";
 import { render } from "../views/layout";
-import { ErrorNote, Field, Flash, Icon } from "../views/ui";
+import { ErrorNote, Field, Flash } from "../views/ui";
 
 const WINDOW = 15 * 60;
 const USER_LIMIT = 10;
@@ -61,7 +62,7 @@ function loginPage(c: AppContext, opts: LoginPageOptions) {
       <p class="notice error hidden" id="passkey-error" role="alert"></p>
 
       <button type="button" class="primary wide" id="passkey-signin">
-        <Icon name="key" />
+        <Key class="icon" aria-hidden="true" />
         Sign in with a passkey
       </button>
 
@@ -173,7 +174,7 @@ function totpPage(c: AppContext, error?: string) {
           autofocus
         />
         <button type="submit" class="primary wide">
-          <Icon name="login" />
+          <Login class="icon" aria-hidden="true" />
           Continue
         </button>
       </form>
@@ -271,7 +272,7 @@ login.get("/login/link/:token", async (c) => {
       )}
       <form method="post" action={`/login/link/${c.req.param("token")}`}>
         <button type="submit" class="primary wide">
-          <Icon name="login" />
+          <Login class="icon" aria-hidden="true" />
           Continue
         </button>
       </form>

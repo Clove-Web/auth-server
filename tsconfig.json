@@ -10,6 +10,14 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
 
+    // pixelarticons/react's own .d.ts types its components against real React
+    // (SVGProps, React.JSX.Element). wrangler.jsonc aliases that package's
+    // `react` import to `hono/jsx` at runtime, so this repo actually gets
+    // hono/jsx elements back; this stub tells tsc that instead.
+    "paths": {
+      "pixelarticons/react": ["./src/types/pixelarticons-react.ts"]
+    },
+
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,

@@ -5,7 +5,6 @@
  */
 
 import type { Child } from "hono/jsx";
-import { ICONS, type IconName } from "./icons";
 
 // Flash messages travel as a fixed code in `?m=`, never as free text, so a
 // crafted link can't put words in this site's mouth.
@@ -52,24 +51,6 @@ export function ErrorNote(props: { error?: string | null | undefined }) {
       {props.error}
     </p>
   ) : null;
-}
-
-/** A pixelarticons glyph. Sizes with the surrounding font (see `.icon` in style.css). */
-export function Icon(props: { name: IconName; class?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      class={props.class ? `icon ${props.class}` : "icon"}
-      aria-hidden="true"
-      focusable="false"
-    >
-      {ICONS[props.name].map((d) => (
-        <path d={d} />
-      ))}
-    </svg>
-  );
 }
 
 export function Csrf(props: { token: string }) {

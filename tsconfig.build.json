@@ -1,0 +1,12 @@
+{
+  // Used by wrangler (see the top-level "tsconfig" field in wrangler.jsonc)
+  // to bundle the actual Worker. It must NOT carry the "paths" override from
+  // tsconfig.json: that's a type-checking-only stand-in for
+  // "pixelarticons/react", and esbuild (wrangler's bundler) honours tsconfig
+  // "paths" for real module resolution too, so leaving it in here would
+  // literally replace the icon package with the type stub at runtime.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {}
+  }
+}

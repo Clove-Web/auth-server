@@ -5,6 +5,7 @@
  */
 
 import { Hono } from "hono";
+import { Login, UserPlus } from "pixelarticons/react";
 import type { AppContext, AppEnv } from "../env";
 import { audit } from "../lib/audit";
 import { timingSafeEqualStr } from "../lib/crypto";
@@ -14,7 +15,7 @@ import { cleanText, emailProblem, normaliseUsername, usernameProblem } from "../
 import { startSession } from "../data/sessions";
 import { countUsers, createFirstAdmin } from "../data/users";
 import { render } from "../views/layout";
-import { ErrorNote, Field, Icon } from "../views/ui";
+import { ErrorNote, Field } from "../views/ui";
 
 export const setup = new Hono<AppEnv>();
 
@@ -27,7 +28,7 @@ function closed(c: AppContext) {
       <p class="muted">This server already has accounts.</p>
       <p>
         <a class="btn primary" href="/login">
-          <Icon name="login" />
+          <Login class="icon" aria-hidden="true" />
           Sign in
         </a>
       </p>
@@ -64,7 +65,7 @@ function setupPage(c: AppContext, values: Record<string, string> = {}, error?: s
         <Field label="Display name" name="name" value={values.name} autocomplete="name" maxlength={100} />
         <Field label="Email" name="email" type="email" value={values.email} autocomplete="email" maxlength={254} />
         <button type="submit" class="primary wide">
-          <Icon name="user-plus" />
+          <UserPlus class="icon" aria-hidden="true" />
           Create admin account
         </button>
       </form>
