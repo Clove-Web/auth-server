@@ -7,6 +7,7 @@
 import type { Child } from "hono/jsx";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { siteName, type AppContext } from "../env";
+import { Icon } from "./ui";
 
 interface PageOptions {
   title: string;
@@ -27,9 +28,10 @@ export async function render(c: AppContext, opts: PageOptions, body: Child): Pro
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="dark light" />
+        <meta name="color-scheme" content="dark" />
         <meta name="robots" content="noindex" />
         <title>{`${opts.title} · ${site}`}</title>
+        <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
         <link rel="stylesheet" href="/static/style.css" />
         <script src="/static/app.js" defer></script>
       </head>
@@ -40,11 +42,20 @@ export async function render(c: AppContext, opts: PageOptions, body: Child): Pro
           </a>
           {user && (
             <nav>
-              <a href="/account">Account</a>
-              {user.isAdmin && <a href="/admin">Admin</a>}
+              <a class="btn small" href="/account">
+                <Icon name="user" />
+                Account
+              </a>
+              {user.isAdmin && (
+                <a class="btn small" href="/admin">
+                  <Icon name="shield" />
+                  Admin
+                </a>
+              )}
               <form method="post" action="/logout" class="inline">
                 <input type="hidden" name="_csrf" value={session?.csrf ?? ""} />
-                <button type="submit" class="link">
+                <button type="submit" class="small">
+                  <Icon name="logout" />
                   Sign out
                 </button>
               </form>

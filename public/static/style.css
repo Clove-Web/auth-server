@@ -3,42 +3,26 @@
  * Licensed under the DASL-1.2 Licence.
  * See LICENCE.md in the project root for full licence information.
  */
-
 :root {
-  --bg: #060d18;
-  --surface: #0d1a2c;
-  --surface-2: #13243b;
-  --border: #22375a;
-  --text: #e6edf7;
-  --muted: #8ea2bf;
-  --accent: #8ab4ff;
-  --accent-text: #06101f;
-  --ok: #5fd39a;
-  --ok-bg: rgba(95, 211, 154, 0.12);
-  --danger: #ff7a8a;
-  --danger-bg: rgba(255, 122, 138, 0.12);
-  --focus: #b9d2ff;
-  --radius: 10px;
+  --bg: #07050a;
+  --surface: #100a10;
+  --surface-2: #1a1016;
+  --border: #34141c;
+  --border-strong: #5c1c28;
+  --text: #ece3e6;
+  --muted: #9c848c;
+  --accent: #9c1f34;
+  --accent-strong: #c22a44;
+  --accent-text: #fff2f2;
+  --ok: #5f9e78;
+  --ok-bg: rgba(95, 158, 120, 0.12);
+  --danger: #ff4d5e;
+  --danger-bg: rgba(255, 77, 94, 0.12);
+  --focus: #e23a52;
+  --focus-glow: rgba(226, 58, 82, 0.35);
+  --radius: 8px;
+  --display-font: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f4f6fb;
-    --surface: #ffffff;
-    --surface-2: #eef2f9;
-    --border: #d4dcea;
-    --text: #0f1a2b;
-    --muted: #5a6b85;
-    --accent: #2456c9;
-    --accent-text: #ffffff;
-    --ok: #16794a;
-    --ok-bg: rgba(22, 121, 74, 0.1);
-    --danger: #c02a3d;
-    --danger-bg: rgba(192, 42, 61, 0.08);
-    --focus: #2456c9;
-    color-scheme: light;
-  }
 }
 
 *,
@@ -53,13 +37,22 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 900px 480px at 50% -12%, rgba(156, 31, 52, 0.16), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 110%, rgba(92, 28, 40, 0.12), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-strong);
+}
+
+a:hover {
+  color: var(--focus);
 }
 
 code {
@@ -69,12 +62,16 @@ code {
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-family: var(--display-font);
+  font-size: 1.6rem;
+  letter-spacing: 0.015em;
   margin: 0 0 0.75rem;
 }
 
 h2 {
-  font-size: 1.1rem;
+  font-family: var(--display-font);
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
   margin: 0 0 0.5rem;
 }
 
@@ -99,13 +96,17 @@ h2 {
   gap: 1rem;
   flex-wrap: wrap;
   padding: 0.75rem 16px;
+  background: linear-gradient(180deg, var(--surface), #0b070a);
   border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  box-shadow: 0 1px 0 rgba(156, 31, 52, 0.25);
 }
 
 .brand {
   color: var(--text);
-  font-weight: 650;
+  font-family: var(--display-font);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-decoration: none;
 }
 
@@ -131,10 +132,13 @@ main.narrow {
 
 .card,
 .panel {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-top: 1px solid var(--border-strong);
   border-radius: var(--radius);
   padding: 1.25rem;
+  box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.8);
 }
 
 .panel {
@@ -143,23 +147,34 @@ main.narrow {
 
 .tabs {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.4rem;
   overflow-x: auto;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .tabs a {
-  padding: 0.5rem 0.75rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
   color: var(--muted);
   text-decoration: none;
   white-space: nowrap;
-  border-bottom: 2px solid transparent;
+  font-weight: 550;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tabs a:hover {
+  border-color: var(--accent-strong);
+  color: var(--text);
 }
 
 .tabs a.active {
-  color: var(--text);
-  border-bottom-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-strong), var(--accent) 85%);
+  border-color: var(--border-strong);
+  color: var(--accent-text);
 }
 
 /* --- forms ------------------------------------------------------------------- */
@@ -216,6 +231,8 @@ input:disabled {
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--focus-glow);
+  border-radius: 4px;
 }
 
 fieldset {
@@ -247,7 +264,12 @@ legend {
   margin-top: 0.3rem;
 }
 
-button {
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   padding: 0.55rem 1rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -255,11 +277,21 @@ button {
   color: var(--text);
   font: inherit;
   font-weight: 550;
+  text-decoration: none;
   cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-button:hover:not(:disabled) {
-  border-color: var(--accent);
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+}
+
+button:hover:not(:disabled),
+.btn:hover {
+  border-color: var(--accent-strong);
+  color: var(--text);
 }
 
 button:disabled {
@@ -267,32 +299,49 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
+button.primary,
+.btn.primary {
+  background: linear-gradient(180deg, var(--accent-strong), var(--accent) 85%);
+  border-color: var(--border-strong);
   color: var(--accent-text);
 }
 
-button.danger {
+button.primary:hover:not(:disabled),
+.btn.primary:hover {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--focus-glow);
+  color: var(--accent-text);
+}
+
+button.danger,
+.btn.danger {
   color: var(--danger);
 }
 
-button.small {
+button.small,
+.btn.small {
   padding: 0.3rem 0.65rem;
   font-size: 0.85rem;
 }
 
-button.wide {
+button.wide,
+.btn.wide {
   width: 100%;
 }
 
-button.link {
+button.link,
+.btn.link {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--accent);
+  color: var(--accent-strong);
   font-weight: inherit;
   text-decoration: underline;
+}
+
+.btn.link:hover {
+  border-color: transparent;
+  color: var(--focus);
 }
 
 form.inline {
@@ -476,6 +525,11 @@ table.compact td {
 .secret code {
   font-size: 1.05rem;
   letter-spacing: 0.05em;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-text);
 }
 
 @media (max-width: 560px) {

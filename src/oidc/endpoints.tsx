@@ -15,7 +15,7 @@ import { publicJwks } from "../data/keys";
 import { endSession } from "../data/sessions";
 import { getUser, groupsFor } from "../data/users";
 import { render } from "../views/layout";
-import { Csrf } from "../views/ui";
+import { Csrf, Icon } from "../views/ui";
 import {
   SUPPORTED_CLAIMS,
   SUPPORTED_SCOPES,
@@ -197,7 +197,7 @@ async function authorize(c: AppContext) {
           <button type="submit" class="wide">Sign in as someone else</button>
         </form>
         <p class="small">
-          <a href={denied.toString()}>Back to {client.name}</a>
+          <a class="btn wide" href={denied.toString()}>Back to {client.name}</a>
         </p>
       </div>,
     );
@@ -506,11 +506,14 @@ async function endSessionRequest(c: AppContext) {
           <input type="hidden" name="client_id" value={clientId ?? ""} />
           <input type="hidden" name="post_logout_redirect_uri" value={params.post_logout_redirect_uri ?? ""} />
           <input type="hidden" name="state" value={params.state ?? ""} />
-          <button type="submit" class="primary wide">Sign out</button>
+          <button type="submit" class="primary wide">
+            <Icon name="logout" />
+            Sign out
+          </button>
         </form>
         {returnTo && (
           <p class="small">
-            <a href={returnTo}>Stay signed in and go back</a>
+            <a class="btn wide" href={returnTo}>Stay signed in and go back</a>
           </p>
         )}
       </div>,

@@ -51,7 +51,7 @@ import {
   setUserGroups,
 } from "../data/users";
 import { render } from "../views/layout";
-import { Csrf, ErrorNote, Field, Flash, Section, date, relative } from "../views/ui";
+import { Csrf, ErrorNote, Field, Flash, Icon, Section, date, relative } from "../views/ui";
 
 export const admin = new Hono<AppEnv>();
 
@@ -117,7 +117,7 @@ function notFound(c: AppContext, what: string) {
     c,
     { title: "Not found", tab: "", status: 404 },
     <p>
-      That {what} doesn't exist. <a href="/admin">Back</a>
+      That {what} doesn't exist. <a class="btn small" href="/admin">Back</a>
     </p>,
   );
 }
@@ -145,8 +145,8 @@ async function usersPage(c: AppContext, error?: string, values: Record<string, s
               {users.map((u) => (
                 <tr>
                   <td>
-                    <a href={`/admin/users/${encodeURIComponent(u.id)}`}>
-                      <strong>{u.name ?? u.username}</strong>
+                    <a class="btn small" href={`/admin/users/${encodeURIComponent(u.id)}`}>
+                      {u.name ?? u.username}
                     </a>
                     <br />
                     <small class="muted">@{u.username}</small>
@@ -194,7 +194,10 @@ async function usersPage(c: AppContext, error?: string, values: Record<string, s
             />
           </details>
           <div>
-            <button type="submit" class="primary">Create user</button>
+            <button type="submit" class="primary">
+              <Icon name="user-plus" />
+              Create user
+            </button>
           </div>
         </form>
       </Section>
@@ -252,7 +255,7 @@ async function userPage(
     { title: `@${user.username}`, tab: "/admin/users", error: opts.error, status: opts.error ? 400 : undefined },
     <>
       <p>
-        <a href="/admin/users">← All users</a>
+        <a class="btn small" href="/admin/users">← All users</a>
       </p>
       <h1>
         {user.name ?? user.username} <small class="muted">@{user.username}</small>
@@ -323,7 +326,10 @@ async function userPage(
               <option value="604800">7 days</option>
             </select>
           </label>
-          <button type="submit" class="primary">{openLink ? "Replace link" : "Create link"}</button>
+          <button type="submit" class="primary">
+            <Icon name="link" />
+            {openLink ? "Replace link" : "Create link"}
+          </button>
         </form>
       </Section>
 
@@ -555,7 +561,10 @@ async function groupsPage(c: AppContext, error?: string) {
             <Field label="Description" name="description" maxlength={200} autocomplete="off" />
           </div>
           <div>
-            <button type="submit" class="primary">Create group</button>
+            <button type="submit" class="primary">
+              <Icon name="users" />
+              Create group
+            </button>
           </div>
         </form>
       </Section>
@@ -676,8 +685,8 @@ async function clientsPage(c: AppContext, error?: string, raw: Record<string, st
                 {clients.map((cl) => (
                   <tr>
                     <td>
-                      <a href={`/admin/clients/${encodeURIComponent(cl.id)}`}>
-                        <strong>{cl.name}</strong>
+                      <a class="btn small" href={`/admin/clients/${encodeURIComponent(cl.id)}`}>
+                        {cl.name}
                       </a>
                     </td>
                     <td>
@@ -724,7 +733,10 @@ async function clientsPage(c: AppContext, error?: string, raw: Record<string, st
             />
           </details>
           <div>
-            <button type="submit" class="primary">Create application</button>
+            <button type="submit" class="primary">
+              <Icon name="app-windows" />
+              Create application
+            </button>
           </div>
         </form>
       </Section>
@@ -784,7 +796,7 @@ async function clientPage(c: AppContext, id: string, opts: { error?: string; sec
     { title: client.name, tab: "/admin/clients", error: opts.error, status: opts.error ? 400 : undefined },
     <>
       <p>
-        <a href="/admin/clients">← All applications</a>
+        <a class="btn small" href="/admin/clients">← All applications</a>
       </p>
       <h1>{client.name}</h1>
 

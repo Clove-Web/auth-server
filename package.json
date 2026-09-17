@@ -16,6 +16,7 @@
     "@simplewebauthn/server": "^14.0.2",
     "hono": "^4.13.8",
     "jose": "^6.2.12",
+    "pixelarticons": "^2.4.1",
     "uqr": "^0.1.3"
   },
   "devDependencies": {

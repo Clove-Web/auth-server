@@ -35,7 +35,7 @@ import {
   type UserRow,
 } from "../data/users";
 import { render } from "../views/layout";
-import { Csrf, ErrorNote, Field, Flash, Section, date, describeAgent, relative } from "../views/ui";
+import { Csrf, ErrorNote, Field, Flash, Icon, Section, date, describeAgent, relative } from "../views/ui";
 
 export const account = new Hono<AppEnv>();
 
@@ -136,7 +136,10 @@ async function accountPage(c: AppContext, opts: { error?: string; status?: 400 }
         )}
         <form id="passkey-add" class="inline-edit">
           <input type="text" name="name" placeholder="Name, e.g. Phone" maxlength={60} aria-label="New passkey name" />
-          <button type="submit" class="primary">Add a passkey</button>
+          <button type="submit" class="primary">
+            <Icon name="key" />
+            Add a passkey
+          </button>
         </form>
       </Section>
 
@@ -368,10 +371,13 @@ async function totpSetupPage(c: AppContext, error?: string) {
       <form method="post" action="/account/totp/confirm" class="stack">
         <Csrf token={c.get("session")!.csrf} />
         <Field label="Code" name="code" required inputmode="numeric" autocomplete="one-time-code" maxlength={7} autofocus />
-        <button type="submit" class="primary wide">Turn on</button>
+        <button type="submit" class="primary wide">
+          <Icon name="shield" />
+          Turn on
+        </button>
       </form>
       <p class="small">
-        <a href="/account">Cancel</a>
+        <a class="btn wide" href="/account">Cancel</a>
       </p>
     </div>,
   );

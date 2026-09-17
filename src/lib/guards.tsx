@@ -9,6 +9,7 @@ import { TTL, issuerOrigin, now, type AppContext, type AppEnv } from "../env";
 import { timingSafeEqualStr } from "./crypto";
 import { form, safeReturn } from "./http";
 import { render } from "../views/layout";
+import { Icon } from "../views/ui";
 
 function wantsJson(c: AppContext): boolean {
   return (c.req.header("content-type") ?? "").includes("application/json");
@@ -53,7 +54,10 @@ export const requireAdmin = createMiddleware<AppEnv>(async (c, next) => {
         <h1>Admins only</h1>
         <p class="muted">Your account isn't in the admin group for this server.</p>
         <p>
-          <a href="/account">Back to your account</a>
+          <a class="btn primary" href="/account">
+            <Icon name="arrow-left" />
+            Back to your account
+          </a>
         </p>
       </div>,
     );
