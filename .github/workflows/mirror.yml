@@ -1,5 +1,4 @@
-# go to my backup
-name: Codeberg
+name: Mirror
 
 on:
   push:
@@ -16,10 +15,10 @@ jobs:
       cancel-in-progress: false
 
     env:
-      CODEBERG_HOST: codeberg.org
-      CODEBERG_USERNAME: ${{ secrets.CODEBERG_USERNAME }}
-      CODEBERG_REPO: ${{ secrets.CODEBERG_REPO }}
-      CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+      MIRROR_HOST: backup.doughmination.gay
+      MIRROR_USERNAME: clove
+      MIRROR_REPO: auth-server
+      MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
 
     steps:
       - name: Clone every ref
@@ -50,17 +49,17 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ -z "$CODEBERG_USERNAME" ]; then
-            echo "CODEBERG_USERNAME is not set" >&2
+          if [ -z "$MIRROR_USERNAME" ]; then
+            echo "MIRROR_USERNAME is not set" >&2
             exit 1
           fi
 
-          if [ -z "$CODEBERG_REPO" ]; then
-            echo "CODEBERG_REPO is not set" >&2
+          if [ -z "$MIRROR_REPO" ]; then
+            echo "MIRROR_REPO is not set" >&2
             exit 1
           fi
 
-          targetUrl="https://${CODEBERG_HOST}/${CODEBERG_USERNAME}/${CODEBERG_REPO}.git"
+          targetUrl="https://${MIRROR_HOST}/${MIRROR_USERNAME}/${MIRROR_REPO}.git"
 
           echo "Mirroring ${GITHUB_REPOSITORY} -> ${targetUrl}"
 
@@ -68,5 +67,5 @@ jobs:
 
           # Credentials go through a helper so the token never lands in .git/config
           git -c credential.helper= \
-              -c "credential.helper=!f() { echo username=\"\$CODEBERG_USERNAME\"; echo password=\"\$CODEBERG_TOKEN\"; }; f" \
+              -c "credential.helper=!f() { echo username=\"\$MIRROR_USERNAME\"; echo password=\"\$MIRROR_TOKEN\"; }; f" \
               push --mirror mirror
